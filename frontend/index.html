@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Предварительная оценка заявки — carmoney-lab</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <h1>Предварительная оценка заявки на заём под ПТС</h1>
+    <p class="note">Учебный сервис. Все данные синтетические, реальные заявки сюда вводить нельзя.</p>
+</header>
+
+<main>
+    <form id="application-form" novalidate>
+        <div class="field">
+            <label for="applicant_ref">Идентификатор клиента</label>
+            <input id="applicant_ref" name="applicant_ref" value="CL-0025" required>
+        </div>
+        <div class="field">
+            <label for="vin">VIN</label>
+            <input id="vin" name="vin" value="XTA21099998765432" maxlength="17" required>
+        </div>
+        <div class="field">
+            <label for="year">Год выпуска</label>
+            <input id="year" name="year" type="number" value="2019" required>
+        </div>
+        <div class="field">
+            <label for="mileage">Пробег, км</label>
+            <input id="mileage" name="mileage" type="number" value="84000" required>
+        </div>
+        <div class="field">
+            <label for="market_value">Оценочная стоимость, ₽</label>
+            <input id="market_value" name="market_value" type="number" value="900000" required>
+        </div>
+        <div class="field">
+            <label for="requested_amount">Запрошенная сумма, ₽</label>
+            <input id="requested_amount" name="requested_amount" type="number" value="450000" required>
+        </div>
+        <div class="field">
+            <label for="term_months">Срок, месяцев</label>
+            <input id="term_months" name="term_months" type="number" value="24" required>
+        </div>
+
+        <div class="actions">
+            <button type="submit">Отправить заявку</button>
+            <button type="button" id="calc-only">Только рассчитать LTV</button>
+        </div>
+    </form>
+
+    <section id="result" class="result" hidden>
+        <h2>Решение</h2>
+        <dl>
+            <dt>Решение</dt>
+            <dd id="r-decision">—</dd>
+            <dt>LTV</dt>
+            <dd id="r-ltv">—</dd>
+            <dt>Возраст авто</dt>
+            <dd id="r-age">—</dd>
+            <dt>Одобренный лимит</dt>
+            <dd id="r-limit">—</dd>
+            <dt>Номер заявки</dt>
+            <dd id="r-id">—</dd>
+        </dl>
+    </section>
+
+    <section id="errors" class="errors" hidden>
+        <h2>Заявка не принята</h2>
+        <ul id="errors-list"></ul>
+    </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

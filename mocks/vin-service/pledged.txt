@@ -1,0 +1,4 @@
+# VIN, по которым мок отвечает pledge: true. Все значения синтетические.
+R597W4P1WA4599RVF
+TU1L0VZJ7B5MKJMVB
+B29BBTEKXFXJKLUN5

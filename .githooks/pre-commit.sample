@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# ЗАГОТОВКА, НЕ РАБОЧИЙ ХУК.
+#
+# Файл называется pre-commit.sample, поэтому git его не запускает. Рабочий хук
+# (файл pre-commit + исполняемый бит + git config core.hooksPath .githooks)
+# вы делаете в днях 2–3 — заготовка нужна только чтобы было с чего начать.
+#
+# Что должно быть в готовом хуке:
+#   1) проверка staged-изменений на секреты:
+#      gitleaks protect --staged, если gitleaks установлен;
+#      если нет — регулярки на sk-…, AKIA…, -----BEGIN … PRIVATE KEY-----,
+#      password=, token=;
+#   2) php -l на изменённых .php-файлах;
+#   3) понятное сообщение при срабатывании: что нашли, где, как починить;
+#   4) выход с кодом 1, чтобы коммит не прошёл.
+
+set -euo pipefail
+
+echo "[pre-commit] Это заготовка из .githooks/pre-commit.sample, проверки не реализованы."
+echo "[pre-commit] Рабочий хук делается в днях 2–3."
+
+# Список файлов в индексе — с него удобно начинать:
+# STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+
+# TODO: проверка на секреты
+# TODO: php -l по изменённым .php
+# TODO: exit 1 при находке
+
+exit 0

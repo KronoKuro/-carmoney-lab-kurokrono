@@ -1,0 +1,19 @@
+# Зависимости ставятся внутри образа — с хоста их не копируем:
+# локальный vendor собран под другую платформу.
+vendor/
+node_modules/
+
+.git/
+.github/
+.phpunit.cache/
+.phpunit.result.cache
+
+# Секреты в образ не попадают никогда
+.env
+.env.local
+
+docs/
+quarantine/
+.idea/
+.vscode/
+.DS_Store

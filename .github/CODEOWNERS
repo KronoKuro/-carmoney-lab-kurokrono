@@ -1,0 +1,19 @@
+# CODEOWNERS — кто обязан одобрить изменения в чувствительных путях.
+#
+# ШАБЛОН. Логины ниже — заглушки: замените их на реальные логины ролей своей
+# команды (день 2, ДЗ 2.3). В личном репозитории файл можно не трогать: там
+# владелец один — вы.
+#
+# Работает только вместе с branch protection на main:
+# Settings → Branches → Require a pull request → Require review from Code Owners.
+
+# Обвязка агента и CI — владелец CI и harness (в дне 3 — Инженер конвейера)
+/.kilo/agents/          @OWNER-HARNESS
+/kilo.jsonc             @OWNER-HARNESS
+/.githooks/             @OWNER-HARNESS
+/docs/agent-rules.md    @OWNER-HARNESS
+/AGENTS.md              @OWNER-HARNESS
+/.github/               @OWNER-HARNESS
+
+# Спецификации — владелец спеки (в дне 3 — Хранитель спеки)
+/docs/spec/             @OWNER-SPEC

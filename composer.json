@@ -1,0 +1,29 @@
+{
+    "name": "carmoney-lab/carmoney-lab",
+    "description": "Учебный сервис предварительной оценки заявки на заём под ПТС (синтетические данные)",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "slim/slim": "^4.12",
+        "slim/psr7": "^1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CarMoneyLab\\": "backend/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CarMoneyLab\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

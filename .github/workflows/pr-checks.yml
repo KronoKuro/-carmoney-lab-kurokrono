@@ -1,0 +1,75 @@
+name: PR checks
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer:v2
+
+      - name: Проверить синтаксис PHP
+        run: find backend tests -name '*.php' -print0 | xargs -0 -n1 php -l
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo, pdo_mysql
+          tools: composer:v2
+
+      - name: Кэш зависимостей Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - name: Установить зависимости
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit --colors=never
+
+  # Агентское ревью подключается в дне 3 (3.17): там job становится обязательным
+  # гейтом. Пока это заготовка-советчик: падение не блокирует PR.
+  ai-review:
+    name: ai-review
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Заготовка агентского ревью
+        run: |
+          echo "ai-review пока не настроен."
+          echo "День 3, 3.17: сюда добавляется вызов агента-ревьюера."
+          echo "Ключ берётся из secrets.OPENROUTER_API_KEY_CI, комментарий в PR — через GITHUB_TOKEN."
+          echo "Файлы в диффе:"
+          git diff --name-only origin/${{ github.base_ref }}...HEAD || true

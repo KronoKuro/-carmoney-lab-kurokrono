@@ -1,0 +1,35 @@
+# Секреты и локальные настройки — в репозиторий не попадают никогда.
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+id_rsa*
+
+# Зависимости и кэши
+/vendor/
+/node_modules/
+/.phpunit.cache/
+.phpunit.result.cache
+/coverage/
+
+# Данные и дампы
+/db/data/
+*.sql.gz
+*.dump
+/var/
+/tmp/
+
+# Карантин входов агента (3.26): тексты issues и ответы MCP не коммитим
+/quarantine/
+
+# Локальные переопределения compose (порты стенда и т.п.)
+docker-compose.override.yml
+
+# IDE и ОС
+.idea/
+.vscode/
+.DS_Store
+
+# Kilo Code: копии репо для параллельных сессий (1.2.3) — не коммитим
+/.kilo/worktrees/

@@ -1,0 +1,45 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: php -S 0.0.0.0:8080 -t backend/public backend/public/router.php
+    working_dir: /app
+    environment:
+      DB_DSN: "mysql:host=db;port=3306;dbname=carmoney_lab;charset=utf8mb4"
+      DB_USER: lab
+      DB_PASSWORD: lab
+      APP_DEBUG: "1"
+    ports:
+      # Порт снаружи переопределяется переменной APP_PORT (на стенде — из вашего диапазона).
+      - "${APP_PORT:-8080}:8080"
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - ./tests:/app/tests
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: carmoney_lab
+      MYSQL_USER: lab
+      MYSQL_PASSWORD: lab
+      MYSQL_ROOT_PASSWORD: lab-root
+    ports:
+      - "${DB_PORT:-3307}:3306"
+    volumes:
+      # Файлы отрабатывают по алфавиту при первом старте пустого тома.
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-ulab", "-plab"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db-data:
